@@ -63,6 +63,11 @@
 			<artifactId>spring-webmvc-portlet</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+		<dependency>  
+            <groupId>org.springframework</groupId>  
+            <artifactId>spring-test</artifactId>  
+            <version>${org.springframework-version}</version>  
+        </dependency>
 		<!-- Spring Security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -83,6 +88,22 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${org.springframework.security-version}</version>
+		</dependency>
+		
+		<!-- Megastore-Base -->
+		<dependency>
+			<groupId>com.walemao</groupId>
+			<artifactId>Megastore-Base</artifactId>
+			<version>1.0.0-BUILD-SNAPSHOT</version>
+			<type>war</type>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.walemao</groupId>
+			<artifactId>Megastore-Base</artifactId>
+			<version>1.0.0-BUILD-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- MySql -->

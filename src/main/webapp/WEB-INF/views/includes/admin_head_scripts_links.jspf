@@ -1,9 +1,0 @@
-<meta name="_csrf" content="${_csrf.token}"/>
-<!-- default header name is X-CSRF-TOKEN -->
-<meta name="_csrf_header" content="${_csrf.headerName}"/>
-<link rel="stylesheet" href="<c:url value="/resources-admin/css/bootstrap.min.css"/>" />
-<link rel="stylesheet" href="<c:url value="/resources-admin/css/bootstrap-datetimepicker.min.css"/>" />
-<link rel="stylesheet" href="<c:url value="/resources-admin/css/bootstrap-dataTables.css"/>" />
-<link rel="stylesheet" href="<c:url value="/resources-admin/css/font-awesome.css"/>" />
-<link rel="stylesheet" href="<c:url value="/resources-admin/css/megastore.admin.main.css"/>" />
-<link rel="stylesheet" href="<c:url value="/resources-admin/css/megastore.admin.extra.css"/>" />

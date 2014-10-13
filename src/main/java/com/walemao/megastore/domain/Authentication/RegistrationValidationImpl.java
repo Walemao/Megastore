@@ -1,4 +1,4 @@
-package com.walemao.megastore.domain;
+package com.walemao.megastore.domain.Authentication;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,8 +6,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 
+import com.walemao.megastore.domain.User;
+
+
 @Component("registrationValidator")
-public class RegistrationValidation 
+public class RegistrationValidationImpl implements RegistrationValidation
 {
 	private Logger logger = LoggerFactory.getLogger(RegistrationValidation.class);
 	public boolean supports(Class<?> klass) 
@@ -21,7 +24,7 @@ public class RegistrationValidation
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userName",
 				"NotEmpty.registration.userName",
 				"User Name must not be Empty.");
-		logger.debug("ffffffffffffffffffff");
+
 		String userName = user.getUserName();
 		logger.debug("fff" + userName);
 		if ((userName.length()) > 50) 

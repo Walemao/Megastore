@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.walemao.megastore.domain.RegistrationValidation;
 import com.walemao.megastore.domain.User;
-
+import com.walemao.megastore.domain.Authentication.RegistrationUsernameProvider;
+import com.walemao.megastore.domain.Authentication.RegistrationValidation;
+import com.walemao.megastore.domain.Authentication.RegistrationValidationImpl;
 import com.walemao.megastore.service.UserService;
 
 @Controller
@@ -28,9 +29,11 @@ public class RegistrationController {
 	@Autowired
     private RegistrationValidation registrationValidation;
 	
+	@Autowired
+	private RegistrationUsernameProvider provider;
 	
 	public void setRegistrationValidation(
-            @ModelAttribute RegistrationValidation registrationValidation) 
+            @ModelAttribute RegistrationValidationImpl registrationValidation) 
 	{
 		this.registrationValidation = registrationValidation;
 	}
@@ -54,6 +57,9 @@ public class RegistrationController {
 		{
 			return "registrationform";
 		}
+		user.setPassword(provider.encodePassword(user));
+		user.setSalt(user.getUserName());
+	
 		int id = m_userService.insert(user);
 		return "registrationsuccess" + id;
     }

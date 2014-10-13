@@ -41,9 +41,6 @@
 		<property name="closeConnectionWatchTimeoutInMs" value="1000" />
 	</bean>
 
-
-
-
 	<!-- log4jdbc代理数据源 -->
 	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
 		<constructor-arg ref="dataSourceSpied" />
@@ -65,20 +62,6 @@
 			location="/WEB-INF/classes/com/walemao/megastore/sql/init_user_authority.sql" />
 	</jdbc:initialize-database>
 
-	<!-- 配置MongoDB数据源 -->
-	<mongo:mongo host="localhost" port="27017">
-		<mongo:options connections-per-host="8"
-			threads-allowed-to-block-for-connection-multiplier="4"
-			connect-timeout="1000" max-wait-time="1500" auto-connect-retry="true"
-			socket-keep-alive="true" socket-timeout="1500" slave-ok="true"
-			write-number="1" write-timeout="0" write-fsync="true" />
-	</mongo:mongo>
-
-	<!-- Mongo Template -->
-	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-		<constructor-arg ref="mongo" />
-		<constructor-arg name="databaseName" value="what2eat" />
-	</bean>
 
 	<bean id="txManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -104,6 +87,4 @@
 			advice-ref="txAdvice" />
 	</aop:config>
 
-	<!-- 导入Spring Security配置文件 -->
-	<import resource="spring-security.xml" />
 </beans>

@@ -135,16 +135,29 @@
 	<beans:bean id="md5" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder">
 	</beans:bean>
 	
+	<beans:bean id = "userDetailsService" class="com.walemao.megastore.domain.Authentication.UsernameJdbcDaoImpl">
+		<beans:property name="dataSource" ref="dataSource"/>
+		<beans:property name="usersByUsernameQuery" 
+			value = "select u_username as username, u_password as password, u_enabled as enabled, u_salt as salt from t_user where u_username = ?"/>
+		<beans:property name="authoritiesByUsernameQuery" value="select username, authority from t_user_authority where username = ?"/>
+	</beans:bean>
+	
 	<!-- userDetailsService获取jdbc数据 -->
-	<jdbc-user-service id="userDetailsService"
+	<!-- <jdbc-user-service id="userDetailsService" 
 				data-source-ref="dataSource"
 				users-by-username-query="select u_username as username, u_password as password, u_enabled as enabled from t_user where u_username = ?"
-				authorities-by-username-query="select username, authority from t_user_authority where username = ?"/>
+				authorities-by-username-query="select username, authority from t_user_authority where username = ?"/> -->
 
 	<beans:bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
 		<!-- <beans:property name="passwordEncoder" ref="md5"></beans:property>
 		<beans:property name="saltSource" ref="saltSource"></beans:property> -->
 		<beans:property name="userDetailsService" ref="userDetailsService"></beans:property>
+	</beans:bean>
+	
+	
+	<beans:bean id = "registrationUsernameProvider" class="com.walemao.megastore.domain.Authentication.RegistrationUsernameProvider">
+		<beans:property name="userDetailsService" ref="userDetailsService"></beans:property>
+		<beans:property name="passwordEncoder" ref="md5"></beans:property>
 	</beans:bean>
 	
 	<!-- ======================== AUTHENTICATION ======================= -->

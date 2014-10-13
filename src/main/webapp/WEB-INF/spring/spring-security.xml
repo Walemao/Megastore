@@ -12,99 +12,12 @@
 	<!-- 不需要Security保护的资源 -->
 	<http pattern="/resources/**" security="none" />
 
-	<!-- 前台后台URL识别 -->
-	<beans:bean id="loginUrlEntryPoint"
-		class="com.walemao.megastore.filter.LoginUrlEntryPoint"></beans:bean>
-
-	<!-- 验证前台用户 -->
-	<beans:bean id="loginFilter"
-		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
-		<beans:property name="authenticationManager" ref="org.springframework.security.authenticationManager" />
-		<beans:property name="usernameParameter" value="username"></beans:property>
-		<beans:property name="passwordParameter" value="password"></beans:property>
-		<beans:property name="authenticationFailureHandler"
-			ref="failureHandler" />
-		<beans:property name="authenticationSuccessHandler"
-			ref="successHandler" />
-		<beans:property name="filterProcessesUrl" value="/login" />
-	</beans:bean>
-
-	<beans:bean id="failureHandler"
-		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
-		<beans:property name="defaultFailureUrl" value="/login.html?error=true" />
-	</beans:bean>
-
-	<beans:bean id="successHandler"
-		class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
-		<beans:property name="alwaysUseDefaultTargetUrl" value="true" />
-		<beans:property name="defaultTargetUrl" value="/index" />
-	</beans:bean>
-
-	<!-- 验证后台用户 -->
-	<beans:bean id="adminLoginFilter"
-		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
-		<beans:property name="authenticationManager" ref="org.springframework.security.authenticationManager" />
-		<beans:property name="usernameParameter" value="username"></beans:property>
-		<beans:property name="passwordParameter" value="password"></beans:property>
-		<beans:property name="authenticationFailureHandler"
-			ref="adminFailureHandler" />
-		<beans:property name="authenticationSuccessHandler"
-			ref="adminSuccessHandler" />
-		<beans:property name="filterProcessesUrl" value="/admin/login" />
-	</beans:bean>
-
-	<beans:bean id="adminFailureHandler"
-		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
-		<beans:property name="defaultFailureUrl" value="/admin/login.html?error=true" />
-	</beans:bean>
-
-	<beans:bean id="adminSuccessHandler"
-		class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
-		<beans:property name="alwaysUseDefaultTargetUrl" value="true" />
-		<beans:property name="defaultTargetUrl" value="/admin/index" />
-	</beans:bean>
-
-	<!-- 注销过滤器，完成前台用户注销时的定向功能 -->
-	<beans:bean id="logoutFilter"
-		class="org.springframework.security.web.authentication.logout.LogoutFilter">
-		<beans:constructor-arg value="/login.html" />
-		<beans:constructor-arg>
-			<beans:list>
-				<beans:bean
-					class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
-			</beans:list>
-		</beans:constructor-arg>
-		<beans:property name="filterProcessesUrl" value="/logout" />
-	</beans:bean>
-	
-	<!-- 注销过滤器，完成后台用户注销时的定向功能 -->
-	<beans:bean id="adminLogoutFilter"
-		class="org.springframework.security.web.authentication.logout.LogoutFilter">
-		<beans:constructor-arg value="/admin/login.html" />
-		<beans:constructor-arg>
-			<beans:list>
-				<beans:bean
-					class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
-			</beans:list>
-		</beans:constructor-arg>
-		<beans:property name="filterProcessesUrl" value="/admin/logout" />
-	</beans:bean>
 
 	<!-- 需要Security保护的资源 -->
 	<http entry-point-ref="loginUrlEntryPoint">
 		<intercept-url pattern="/login.**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/admin/login.**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
 		<intercept-url pattern="/user/**" access="ROLE_USER" />
 
-
-		<!-- 登录过滤器 -->
-		<custom-filter before="FORM_LOGIN_FILTER" ref="loginFilter" />
-		<custom-filter position="FORM_LOGIN_FILTER" ref="adminLoginFilter" />
-
-		<!-- 注销过滤器 -->
-		<custom-filter before="LOGOUT_FILTER" ref="logoutFilter" />
-		<custom-filter position="LOGOUT_FILTER" ref="adminLogoutFilter" />
 
 		<!-- Header管理 -->
 		<headers>

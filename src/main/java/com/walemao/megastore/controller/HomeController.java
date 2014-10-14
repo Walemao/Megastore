@@ -1,4 +1,4 @@
-package com.walemao.megastore;
+package com.walemao.megastore.controller;
 
 import java.text.DateFormat;
 import java.util.Date;

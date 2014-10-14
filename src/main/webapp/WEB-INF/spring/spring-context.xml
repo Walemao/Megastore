@@ -86,5 +86,7 @@
 		<aop:advisor pointcut-ref="transactionPointCut"
 			advice-ref="txAdvice" />
 	</aop:config>
-
+	
+	<!-- 导入Spring Security配置文件 -->
+	<import resource="spring-security.xml" />
 </beans>

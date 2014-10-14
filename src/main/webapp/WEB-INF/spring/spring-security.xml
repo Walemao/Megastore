@@ -14,7 +14,7 @@
 
 
 	<!-- 需要Security保护的资源 -->
-	<http entry-point-ref="loginUrlEntryPoint">
+	<http>
 		<intercept-url pattern="/login.**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		<intercept-url pattern="/user/**" access="ROLE_USER" />
 		
@@ -55,20 +55,14 @@
 	<beans:bean id="md5" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder">
 	</beans:bean>
 	
-	<beans:bean id = "userDetailsService" class="com.walemao.megastore.domain.Authentication.UsernameJdbcDaoImpl">
+	<beans:bean id = "userDetailsService" class="com.walemao.megastore.repository.impl.UsernameJdbcDaoImpl">
 		<beans:property name="dataSource" ref="dataSource"/>
 		<beans:property name="usersByUsernameQuery" 
 			value = "select u_username as username, u_password as password, u_enabled as enabled, u_salt as salt from t_user where u_username = ?"/>
 		<beans:property name="authoritiesByUsernameQuery" value="select username, authority from t_user_authority where username = ?"/>
 	</beans:bean>
-
-	<beans:bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
-		<!-- <beans:property name="passwordEncoder" ref="md5"></beans:property>
-		<beans:property name="saltSource" ref="saltSource"></beans:property> -->
-		<beans:property name="userDetailsService" ref="userDetailsService"></beans:property>
-	</beans:bean>
 	
-	<beans:bean id = "registrationUsernameProvider" class="com.walemao.megastore.domain.Authentication.RegistrationUsernameProvider">
+	<beans:bean id = "usernameAuthenticatonProvider" class="com.walemao.megastore.domain.rel.UsernameAuthenticatonProvider">
 		<beans:property name="userDetailsService" ref="userDetailsService"></beans:property>
 		<beans:property name="passwordEncoder" ref="md5"></beans:property>
 	</beans:bean>
@@ -77,7 +71,7 @@
 	<beans:bean  id="org.springframework.security.authenticationManager"  class="org.springframework.security.authentication.ProviderManager">
 		<beans:property name="providers">
 			<beans:list>
-				<beans:ref local="daoAuthenticationProvider"/>
+				<beans:ref local="usernameAuthenticatonProvider"/>
 			</beans:list>
 		</beans:property>
 	</beans:bean>

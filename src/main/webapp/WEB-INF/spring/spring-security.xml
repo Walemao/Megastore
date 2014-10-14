@@ -65,6 +65,7 @@
 	<beans:bean id = "usernameAuthenticatonProvider" class="com.walemao.megastore.domain.rel.UsernameAuthenticatonProvider">
 		<beans:property name="userDetailsService" ref="userDetailsService"></beans:property>
 		<beans:property name="passwordEncoder" ref="md5"></beans:property>
+		<beans:property name="saltSource" ref="saltSource"></beans:property>
 	</beans:bean>
 	
 	<!-- ======================== AUTHENTICATION ======================= -->

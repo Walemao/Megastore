@@ -71,6 +71,7 @@ public class AuthenticationController
     @RequestMapping(value = "modify_pwd", method = RequestMethod.GET)
     public @ResponseBody String changePassword(String password, String newPassword)
     {
+    	int a = 0;
     	return null;
     }
     
